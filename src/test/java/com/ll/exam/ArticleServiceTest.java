@@ -4,8 +4,10 @@ import com.ll.exam.article.dto.ArticleDto;
 import com.ll.exam.article.service.ArticleService;
 import com.ll.exam.mymap.MyMap;
 import com.ll.exam.util.Ut;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -14,7 +16,17 @@ import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ArticleServiceTest {
+
+    // @BeforeAll 붙인 아래 메서드는
+    @BeforeAll
+    public void BeforeAll() {
+        MyMap myMap = Container.getObj(MyMap.class);
+
+        // 모든 DB 처리시에, 처리되는 SQL을 콘솔에 출력
+        myMap.setDevMode(true);
+    }
 
     // @BeforeEach를 붙인 아래 메서드는
     // @Test가 달려있는 메서드가 실행되기 전에 자동으로 실행이 된다.
