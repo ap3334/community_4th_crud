@@ -25,8 +25,10 @@ public class ArticleRepository {
     public ArticleDto getArticleById(long id) {
 
         SecSql sql = myMap.genSecSql();
-        sql.append("SELECT * FROM article WHERE id=?", id);
-
+        sql
+                .append("SELECT *")
+                .append("FROM article")
+                .append("WHERE id = ?", id);
         return sql.selectRow(ArticleDto.class);
 
     }
