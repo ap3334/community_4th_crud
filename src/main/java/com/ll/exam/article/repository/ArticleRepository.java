@@ -43,4 +43,18 @@ public class ArticleRepository {
         return sql.selectLong();
 
     }
+
+    public long write(String title, String body, boolean blind) {
+
+        SecSql sql = myMap.genSecSql();
+        sql
+                .append("INSERT INTO article")
+                .append("SET createdDate = NOW(),")
+                .append("modifiedDate = NOW(),")
+                .append("title = ?,", title)
+                .append("`body` = ?,", body)
+                .append("isblind = ?", blind);
+
+        return sql.insert();
+    }
 }
