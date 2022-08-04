@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-public class Rq {
+public class  Rq {
     private final HttpServletRequest req;
     private final HttpServletResponse resp;
     @Setter
