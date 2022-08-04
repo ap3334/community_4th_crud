@@ -3,9 +3,12 @@ package com.ll.exam;
 import com.ll.exam.article.dto.ArticleDto;
 import com.ll.exam.article.service.ArticleService;
 import com.ll.exam.mymap.MyMap;
+import com.ll.exam.util.Ut;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -104,6 +107,26 @@ public class ArticleServiceTest {
         assertThat(articleDto.getCreatedDate()).isNotNull();
         assertThat(articleDto.getModifiedDate()).isNotNull();
         assertThat(articleDto.isBlind()).isFalse();
+    }
+
+    @Test
+    public void modify() {
+        Ut.sleep(5000);
+
+        ArticleService articleService = Container.getObj(ArticleService.class);
+
+        articleService.modify(1, "제목 new", "내용 new", true);
+
+        ArticleDto articleDto = articleService.getArticleById(1);
+
+        assertThat(articleDto.getId()).isEqualTo(1);
+        assertThat(articleDto.getTitle()).isEqualTo("제목 new");
+        assertThat(articleDto.getBody()).isEqualTo("내용 new");
+        assertThat(articleDto.isBlind()).isTrue();
+
+        long diffSeconds = ChronoUnit.SECONDS.between(articleDto.getModifiedDate(), LocalDateTime.now());
+        assertThat(diffSeconds).isLessThanOrEqualTo(1L);
+
     }
 
 }
